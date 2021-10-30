@@ -1,0 +1,108 @@
+import pygame
+import logging
+import time
+import random
+
+from pygame import USEREVENT
+
+logging.basicConfig(filename='flappyLog', level=logging.INFO)
+
+# initialize and set screen
+pygame.init()
+
+screen = pygame.display.set_mode((500, 500))
+
+# adds option to quit
+
+# set player x,y velocity
+x, y = 50, 450
+width, height = 40, 60
+vel = 5
+# game loop
+run = True
+sprite = pygame.image.load('flappyBird.png')
+
+pygame.time.set_timer(USEREVENT + 2, 3000)
+
+dinner = pygame.image.load('10.png')
+rect = dinner.get_rect()
+
+
+# def create_obstacles():
+#     aa = random.randrange(500)
+#     b = random.randrange(500)
+#     # c = random.randrange()
+#     # d = random.randrange()
+#     pygame.draw.rect(screen, (0, 0, 0), pygame.Rect((450, 50), (50, 250)))
+
+
+class CreateObstacles(object):
+    img = pygame.image.load('0.png')
+
+    def __init__(self, x, y, wwidth, wheight):
+        self.x = x
+        self.y = y
+        self.width = wwidth
+        self.height = wheight
+        self.hitbox = (x, y, wwidth, wheight)
+        self.recta = pygame.Rect(self.x + 5, self.y + 5, self.width - 10, self.height - 5)
+
+    def r(self):
+        return self.recta
+
+    def draw(self, screen):
+        self.hitbox = (self.x + 5, self.y + 5, self.width - 10, self.height - 5)
+        screen.blit(self.img, (self.x, self.y))
+        pygame.draw.rect(screen, (255, 0, 0), self.recta, 10)
+
+
+
+def redrawWindow():
+    for objectts in objects:
+        objectts.draw(screen)
+        a = objectts.r()
+        if rect.colliderect(a):
+            pygame.draw.rect(screen, (255, 0, 28), rect, 4)
+            logging.info(00000000000000000000000)
+
+
+objects = []
+
+while run:
+    screen.fill((209, 245, 66))
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            run = False
+        if event.type == USEREVENT + 2:
+            objects.append(CreateObstacles(500, 210, 0, 64))
+
+    for k in objects:
+
+        k.x -= 1.4
+        if k.x < -k.width * -1:
+            logging.info(f'object.x < -object.width* -1: {k.x} < {-k.width * -1}')
+            objects.pop(objects.index(k))
+
+    userInput = pygame.key.get_pressed()
+
+    if userInput[pygame.K_DOWN] and rect.y < 500 - height - vel:
+        rect.y += vel
+    if userInput[pygame.K_UP] and rect.y > vel:
+        rect.y -= vel + vel
+
+    if rect.y < 450:
+
+        for i in range(vel):
+            rect.y += 1
+            time.sleep(0.00005)
+
+    screen.fill((209, 245, 66))
+    # screen.blit(sprite, (x, y, width, height))
+    screen.blit(dinner, rect)
+    redrawWindow()
+    pygame.display.update()
+
+for i in objects:
+    print(i)
