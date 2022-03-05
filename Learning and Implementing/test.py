@@ -3,16 +3,30 @@ chapter_header_header = {'Tales of Demons And Gods': [' Chapter 355.5 ', ' Chapt
 #chapter_header_header = {'Tales of Demons And Gods':None, 'Versatile Mage':None, 'Solo Leveling':None, 'The Last Human':None, 'The Beginning After the End':None, 'The Great Mage Returns After 4000 Years':None, 'Martial Master':None, 'Kill The Hero':None}
 
 #print(chapter_header_header)
-with open('book_mark_chapter.csv','w', newline='') as file:
-    csv_writer = csv.DictWriter(file, fieldnames=list(chapter_header_header.keys()))
-    csv_writer.writeheader()
-    row = chapter_header_header
-    x=0
-    for i,j in zip(row,row.values()):
+#with open('book_mark_chapter.csv','w', newline='') as file:
+#    csv_writer = csv.DictWriter(file, fieldnames=list(chapter_header_header.keys()))
+#    csv_writer.writeheader()
+#    row = chapter_header_header
+#    x=0
+#    chapter_row = {}
+for i,j in zip(row,row.values()):
+    with open('book_mark_chapter.csv','w', newline='') as file:
+        csv_writer = csv.DictWriter(file, fieldnames=list(chapter_header_header.keys()))
+        csv_writer.writeheader()
+        row = chapter_header_header
+        x=0
+        chapter_row = {}
+    
+    
+    for k in j: # chapter are appended row by row 
         x+=1
-        for k in j: # todo csv here
-            print(i, k)
-            rowrow = {i:k}
-            print(rowrow)
-            csv_writer.writerow(rowrow)
-        print(x)
+        #print(i, k)
+        rowrow = {i:k}
+        #print(rowrow)
+        csv_writer.writerow(rowrow)
+        chapter_row[x]={i:k}
+    # next bookmark acessed
+    file.seek(0)
+    x=0
+    #print(x)
+#print(chapter_row)
